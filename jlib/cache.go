@@ -67,6 +67,10 @@ func Get(collection, key string) (interface{}, error) {
 
 	bytes, err := r.Get(collection + "|" + key)
 	if err != nil {
+		if err == redis.Nil {
+			return nil, nil
+		}
+		
 		return nil, err
 	}
 
