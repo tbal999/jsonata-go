@@ -8,13 +8,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"reflect"
+	"regexp"
 	"sync"
 	"time"
 	"unicode"
-	"regexp"
-	"github.com/tbal999/jsonata-go/jlib"
-	"github.com/tbal999/jsonata-go/jparse"
-	"github.com/tbal999/jsonata-go/jtypes"
+
+	"github.com/xiatechs/jsonata-go/jlib"
+	"github.com/xiatechs/jsonata-go/jparse"
+	"github.com/xiatechs/jsonata-go/jtypes"
 )
 
 var (
@@ -96,7 +97,6 @@ type Expr struct {
 // not a valid JSONata expression, Compile returns an error
 // of type jparse.Error.
 func Compile(expr string) (*Expr, error) {
-
 	cleanExpr := replaceQuotesAndCommentsInPaths(expr)
 
 	node, err := jparse.Parse(cleanExpr)
@@ -178,6 +178,81 @@ func (e *Expr) EvalBytes(data []byte) ([]byte, error) {
 	}
 
 	return json.Marshal(v)
+}
+
+func RunEval(initialContext reflect.Value, expression ...interface{}) (interface{}, error) {
+	var s evaluator
+
+	s = simple{}
+
+	var result interface{}
+
+	var err error
+
+	if len(expression) == 0 {
+		result, err = s.InitialEval(initialContext.Interface(), "$$")
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	for index := range expression {
+		expressionStr, ok := expression[index].(string)
+		if !ok {
+			return nil, fmt.Errorf("%v not able to be used as a string in eval statement", expression[index])
+		}
+		if index == 0 {
+			result, err = s.InitialEval(initialContext.Interface(), expressionStr)
+			if err != nil {
+				return nil, err
+			}
+			continue
+		}
+
+		result, err = s.InitialEval(result, expressionStr)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return result, nil
+}
+
+type evaluator interface {
+	InitialEval(item interface{}, expression string) (interface{}, error)
+	Eval(override, expression string) (interface{}, error)
+}
+
+type simple struct {
+
+}
+
+func (s simple) InitialEval(item interface{}, expression string) (interface{}, error) {
+	expr, err := Compile(expression)
+	if err != nil {
+		return nil, err
+	}
+	
+	result, err := expr.Eval(item)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (s simple) Eval(override, expression string) (interface{}, error) {
+	expr, err := Compile(expression)
+	if err != nil {
+		return nil, err
+	}
+	
+	result, err := expr.Eval(override)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }
 
 // RegisterExts registers custom functions for use during
@@ -381,6 +456,12 @@ func isLetter(r rune) bool {
 func isDigit(r rune) bool {
 	return (r >= '0' && r <= '9') || unicode.IsDigit(r)
 }
+
+/*
+	enables:
+	- comments in jsonata code
+	- fields with any character in their name
+*/
 
 var (
 	reQuotedPath      = regexp.MustCompile(`([A-Za-z\$\\*\` + "`" + `])\.[\"']([\s\S]+?)[\"']`)

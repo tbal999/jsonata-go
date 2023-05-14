@@ -9,12 +9,13 @@ import (
 	"math"
 	"reflect"
 	"sort"
+	"sync"
 
-	"github.com/tbal999/jsonata-go/config"
-	"github.com/tbal999/jsonata-go/jlib"
-	"github.com/tbal999/jsonata-go/jparse"
-	"github.com/tbal999/jsonata-go/jtypes"
 	"github.com/shopspring/decimal"
+	"github.com/xiatechs/jsonata-go/config"
+	"github.com/xiatechs/jsonata-go/jlib"
+	"github.com/xiatechs/jsonata-go/jparse"
+	"github.com/xiatechs/jsonata-go/jtypes"
 )
 
 var undefined reflect.Value
@@ -831,6 +832,7 @@ func evalTypedLambda(node *jparse.TypedLambdaNode, data reflect.Value, env *envi
 func evalObjectTransformation(node *jparse.ObjectTransformationNode, data reflect.Value, env *environment) (reflect.Value, error) {
 	f := &transformationCallable{
 		callableName: callableName{
+			sync.Mutex{},
 			"transform",
 		},
 		pattern: node.Pattern,
