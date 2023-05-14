@@ -66,10 +66,21 @@ var (
 )
 
 var baseEnv = initBaseEnv(map[string]Extension{
-
 	/*
 		EXTENDED START
 	*/
+	"get": {
+		Func:               jlib.Get,
+		UndefinedHandler:   defaultUndefinedHandler,
+		EvalContextHandler: nil,
+	},
+
+	"put": {
+		Func:               jlib.Put,
+		UndefinedHandler:   defaultUndefinedHandler,
+		EvalContextHandler: nil,
+	},
+
 	"objmerge": {
 		Func:               jlib.ObjMerge,
 		UndefinedHandler:   defaultUndefinedHandler,
