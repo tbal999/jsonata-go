@@ -12,8 +12,8 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/xiatechs/jsonata-go/jlib/jxpath"
-	"github.com/xiatechs/jsonata-go/jtypes"
+	"github.com/tbal999/jsonata-go/jlib/jxpath"
+	"github.com/tbal999/jsonata-go/jtypes"
 )
 
 // 2006-01-02T15:04:05.000Z07:00

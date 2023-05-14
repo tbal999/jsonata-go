@@ -9,8 +9,8 @@ import (
 	"reflect"
 
 	"github.com/shopspring/decimal"
-	"github.com/xiatechs/jsonata-go/config"
-	"github.com/xiatechs/jsonata-go/jtypes"
+	"github.com/tbal999/jsonata-go/config"
+	"github.com/tbal999/jsonata-go/jtypes"
 )
 
 // Sum returns the total of an array of numbers. If the array is

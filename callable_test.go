@@ -14,8 +14,8 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/xiatechs/jsonata-go/jparse"
-	"github.com/xiatechs/jsonata-go/jtypes"
+	"github.com/tbal999/jsonata-go/jparse"
+	"github.com/tbal999/jsonata-go/jtypes"
 )
 
 var (

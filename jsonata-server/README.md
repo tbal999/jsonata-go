@@ -5,7 +5,7 @@ for testing [jsonata-go](https://github.com/tbal999/jsonata).
 
 ## Install
 
-    go install github.com/xiatechs/jsonata-go/jsonata-server
+    go install github.com/tbal999/jsonata-go/jsonata-server
 
 ## Usage
 

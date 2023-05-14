@@ -1,4 +1,4 @@
-module github.com/xiatechs/jsonata-go
+module github.com/tbal999/jsonata-go
 
 go 1.20
 

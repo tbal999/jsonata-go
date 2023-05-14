@@ -18,7 +18,7 @@ clean up inconsistent whitespace )
 * by closing [issues][]
 * by reviewing patches
 
-[issues]: https://github.com/xiatechs/jsonata-go/issues
+[issues]: https://github.com/tbal999/jsonata-go/issues
 
 ## Submitting an Issue
 
@@ -55,7 +55,7 @@ clean up inconsistent whitespace )
 * If you don't know how to add tests, please put in a PR and leave a comment asking for help. 
 We love helping!
 
-[repo]: https://github.com/xiatechs/jsonata-go/tree/master
+[repo]: https://github.com/tbal999/jsonata-go/tree/master
 [fork]: https://help.github.com/articles/fork-a-repo/
 [branch]:
 https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/
