@@ -11,9 +11,9 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/tbal999/jsonata-go/jlib"
-	"github.com/tbal999/jsonata-go/jparse"
-	"github.com/tbal999/jsonata-go/jtypes"
+	"github.com/xiatechs/jsonata-go/jlib"
+	"github.com/xiatechs/jsonata-go/jparse"
+	"github.com/xiatechs/jsonata-go/jtypes"
 )
 
 type environment struct {
@@ -66,6 +66,37 @@ var (
 )
 
 var baseEnv = initBaseEnv(map[string]Extension{
+
+	/*
+		EXTENDED START
+	*/
+	"objmerge": {
+		Func:               jlib.ObjMerge,
+		UndefinedHandler:   defaultUndefinedHandler,
+		EvalContextHandler: nil,
+	},
+
+	"sjoin": {
+		Func:               jlib.SimpleJoin,
+		UndefinedHandler:   defaultUndefinedHandler,
+		EvalContextHandler: nil,
+	},
+
+	"eval": {
+		Func:               RunEval,
+		UndefinedHandler:   defaultUndefinedHandler,
+		EvalContextHandler: defaultContextHandler,
+	},
+
+	"unescape": {
+		Func:               jlib.Unescape,
+		UndefinedHandler:   defaultUndefinedHandler,
+		EvalContextHandler: defaultContextHandler,
+	},
+
+	/*
+		EXTENDED END
+	*/
 
 	// String functions
 
@@ -442,7 +473,6 @@ func undefinedHandlerAppend(argv []reflect.Value) bool {
 // Context handlers
 
 func contextHandlerSubstring(argv []reflect.Value) bool {
-
 	// If substring() is called with one or two numeric arguments,
 	// use the evaluation context as the first argument.
 	switch len(argv) {

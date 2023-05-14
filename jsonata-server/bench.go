@@ -10,7 +10,7 @@ import (
 
 	"encoding/json"
 
-	jsonata "github.com/tbal999/jsonata-go"
+	jsonata "github.com/xiatechs/jsonata-go"
 )
 
 var (

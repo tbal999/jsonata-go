@@ -12,7 +12,7 @@ import (
 	"testing"
 	"unicode/utf8"
 
-	"github.com/tbal999/jsonata-go/jparse"
+	"github.com/xiatechs/jsonata-go/jparse"
 )
 
 type testCase struct {

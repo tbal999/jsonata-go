@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/tbal999/jsonata-go/jtypes"
+	"github.com/xiatechs/jsonata-go/jtypes"
 )
 
 // Map (golint)
